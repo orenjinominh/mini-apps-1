@@ -1,55 +1,6 @@
 
 
-console.log('connected!');
-
-/* TO DOs
-- build board
-- function to detect a tie
-- reset button (handle onClick event)
-
-- rules of the game
-- alternate between x and o player, keep track of how many placed onto board and swap per play
-- after each play, check if diagonal or row or column filled up
-- if yes, display winner 
-- if no and board is filled up, there is a tie, display tie
-*/
-
-
-
-// constants 
-const winningCombos = [
-  [0, 1, 2], 
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [6, 4, 2]
-];
-
-var board = Array.from(Array(9).keys());
-
-var currentPlayer = 'X';
-var previousPlayer = null; 
-
-// event listener to see which cell was clicked 
-document.addEventListener('click', function(e){
-  if(e.target.className=="cell"){
-   console.log(`clicked on cell--> ${e.target.id}`);
-  }
-});
-
-let reset = document.getElementById('reset-button');
-
-reset.addEventListener('click', (event) => {
-  console.log('Resetting game now');
-  // function to reset board will come later 
-})
-
-
-
-
+// console.log('connected!');
 
 /*
 - add event listeners to each div class
@@ -67,3 +18,73 @@ compare the array of the turn with winningCombos array indexes
 
 resetGame 
 */
+
+/* ----- constants------ */
+const gameStatus = document.querySelector('.game-status');
+const winnerDisplay = () => `Player ${currentPlayer} wins!`;
+const whoseTurnDisplay = () => `Player ${currentPlayer}'s turn`;
+const tieDisplay = () => `It's a tie!`;
+
+const winningCombos = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6]
+];
+
+/* --- state (variables) -- */
+
+var gameOn = true; 
+var currentPlayer = 'X';
+
+var currentBoard = [
+  '','','',
+  '','','',
+  '','',''
+];
+
+/* ----- event listeners------ */
+
+document.querySelector('.reset-button').addEventListener('click', restartGame);
+
+document.querySelectorAll('.cell').forEach(cell => cell.addEventListener('click', hasCellBeenClicked));
+
+
+/* ----- functions------ */
+gameStatus.innerHTML = whoseTurnDisplay();
+
+function hasCellBeenClicked(clickedEvent) {
+
+  console.log('click event here--->', clickedEvent.target);
+  const clickedCell = clickedEvent.target; // this should give us the div 
+  // grab the index of div clicked, parseInt changes from string to number
+  const clickedCellIndex = parseInt(clickedCell.getAttribute('id'));
+
+  // check if the board at that index has already been filled up or game inactive
+  if (currentBoard[clickedCellIndex] !== '' || !gameOn) {
+    return; 
+  };
+
+  markCell(clickedCell, clickedCellIndex); 
+  checkWinorTie();
+}
+
+function markCell(clickedCell, clickedCellIndex) {
+
+}
+
+function changePlayer() {
+
+}
+
+function checkWinOrTie() {
+
+}
+
+function restartGame() {
+
+}
