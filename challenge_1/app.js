@@ -58,8 +58,6 @@ document.querySelectorAll('.cell').forEach(cell => cell.addEventListener('click'
 gameStatus.innerHTML = whoseTurnDisplay();
 
 function hasCellBeenClicked(clickedEvent) {
-
-  console.log('click event here--->', clickedEvent.target);
   const clickedCell = clickedEvent.target; // this should give us the div 
   // grab the index of div clicked, parseInt changes from string to number
   const clickedCellIndex = parseInt(clickedCell.getAttribute('id'));
@@ -70,7 +68,7 @@ function hasCellBeenClicked(clickedEvent) {
   };
 
   markCell(clickedCell, clickedCellIndex); 
-  // checkWinorTie();
+  checkWinOrTie();
 }
 
 function markCell(clickedCell, clickedCellIndex) {
@@ -79,11 +77,35 @@ function markCell(clickedCell, clickedCellIndex) {
 }
 
 function changePlayer() {
-
+  currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+  gameStatus.innerHTML = whoseTurnDisplay();
 }
 
+// we need to check if win or tie after cell is marked
+// if no wins or ties, change player and continue gameplay
 function checkWinOrTie() {
+  var won = false; 
+  console.log('current board here--->', currentBoard);
+  winningCombos.forEach(combo => {
+    if (currentBoard[combo[0]] !== '' && currentBoard[combo[0]] === currentBoard[combo[1]] && currentBoard[combo[0]] === currentBoard[combo[2]]) {
+      won = true; 
+    }
+  })
 
+  if (won) {
+    gameStatus.innerHTML = winnerDisplay();
+    gameOn = false; 
+    return;
+  }
+
+  var tie = !currentBoard.includes('');
+  if (tie) {
+    gameStatus.innerHTML = tieDisplay();
+    gameOn = false; 
+    return; 
+  }
+
+  changePlayer();
 }
 
 function restartGame() {
