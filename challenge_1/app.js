@@ -63,18 +63,19 @@ function hasCellBeenClicked(clickedEvent) {
   const clickedCell = clickedEvent.target; // this should give us the div 
   // grab the index of div clicked, parseInt changes from string to number
   const clickedCellIndex = parseInt(clickedCell.getAttribute('id'));
-
+  console.log('clickedCellIndex here -->', clickedCellIndex);
   // check if the board at that index has already been filled up or game inactive
   if (currentBoard[clickedCellIndex] !== '' || !gameOn) {
     return; 
   };
 
   markCell(clickedCell, clickedCellIndex); 
-  checkWinorTie();
+  // checkWinorTie();
 }
 
 function markCell(clickedCell, clickedCellIndex) {
-
+  currentBoard[clickedCellIndex] = currentPlayer; 
+  clickedCell.innerHTML = currentPlayer; 
 }
 
 function changePlayer() {
