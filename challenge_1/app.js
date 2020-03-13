@@ -1,10 +1,12 @@
 /* ----- constants------ */
 const gameStatus = document.querySelector('.game-status');
 const tallyTotal = document.querySelector('.tally-total');
+
 const winnerDisplay = () => `Player ${currentPlayer} wins!`;
 const whoseTurnDisplay = () => `Player ${currentPlayer}'s turn`;
 const tieDisplay = () => `It's a tie! Wanna play again?`;
 const winnerTallyDisplay = () => `X wins: ${XTally} O wins: ${OTally}`;
+
 const winningCombos = [
   [0, 1, 2],
   [3, 4, 5],
@@ -43,9 +45,7 @@ gameStatus.innerHTML = whoseTurnDisplay();
 
 function hasCellBeenClicked(clickedEvent) {
   const clickedCell = clickedEvent.target; // this should give us the div 
-  // grab the index of div clicked, parseInt changes from string to number
   const clickedCellIndex = parseInt(clickedCell.getAttribute('id'));
-  // console.log('clickedCellIndex here -->', clickedCellIndex);
   // check if the board at that index has already been filled up or game inactive
   if (currentBoard[clickedCellIndex] !== '' || !gameOn) {
     return; 
@@ -97,7 +97,7 @@ function checkWinOrTie() {
 }
 
 function renderTally() {
-  console.log(winner);
+  // console.log(winner);
   if (winner === 'X') {
     XTally += 1; 
   } else if (winner === 'O') {
@@ -105,8 +105,6 @@ function renderTally() {
   }
 
   tallyTotal.innerHTML = winnerTallyDisplay();
-
-
 }
 
 function restartGame() {
