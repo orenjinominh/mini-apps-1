@@ -1,29 +1,8 @@
-
-
-// console.log('connected!');
-
-/*
-- add event listeners to each div class
-- start with player X and change innerText of div to 'X' when box is clicked
-   - make sure board square is empty before placing
-- keep track of how many times playerX and playerO makes a play on an array holding where they clicked
-- push that element's box id onto the player's array 
-
-togglePlayer
-- if no wins/ties, switch to player O's turn
-- once it's the end of a turn, check for a win
-
-checkWin
-compare the array of the turn with winningCombos array indexes
-
-resetGame 
-*/
-
 /* ----- constants------ */
 const gameStatus = document.querySelector('.game-status');
 const winnerDisplay = () => `Player ${currentPlayer} wins!`;
 const whoseTurnDisplay = () => `Player ${currentPlayer}'s turn`;
-const tieDisplay = () => `It's a tie!`;
+const tieDisplay = () => `It's a tie! Wanna play again?`;
 
 const winningCombos = [
   [0, 1, 2],
@@ -61,7 +40,7 @@ function hasCellBeenClicked(clickedEvent) {
   const clickedCell = clickedEvent.target; // this should give us the div 
   // grab the index of div clicked, parseInt changes from string to number
   const clickedCellIndex = parseInt(clickedCell.getAttribute('id'));
-  console.log('clickedCellIndex here -->', clickedCellIndex);
+  // console.log('clickedCellIndex here -->', clickedCellIndex);
   // check if the board at that index has already been filled up or game inactive
   if (currentBoard[clickedCellIndex] !== '' || !gameOn) {
     return; 
@@ -85,7 +64,7 @@ function changePlayer() {
 // if no wins or ties, change player and continue gameplay
 function checkWinOrTie() {
   var won = false; 
-  console.log('current board here--->', currentBoard);
+  // console.log('current board here--->', currentBoard);
   winningCombos.forEach(combo => {
     if (currentBoard[combo[0]] !== '' && currentBoard[combo[0]] === currentBoard[combo[1]] && currentBoard[combo[0]] === currentBoard[combo[2]]) {
       won = true; 
@@ -109,5 +88,14 @@ function checkWinOrTie() {
 }
 
 function restartGame() {
-
+  // reset game status, currenBoard, gameStatus display, and clears innerHTML on DOM
+  gameOn = true; 
+  currentPlayer = 'X';
+  currentBoard = [
+  '','','',
+  '','','',
+  '','',''
+  ];
+  gameStatus.innerHTML = whoseTurnDisplay();
+  document.querySelectorAll('.cell').forEach(cell => cell.innerHTML = '');
 }
