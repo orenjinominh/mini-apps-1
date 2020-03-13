@@ -125,4 +125,5 @@ function restartGame() {
 function resetTally() {
   XTally = 0;
   OTally = 0;
+  tallyTotal.innerHTML = winnerTallyDisplay();
 }
