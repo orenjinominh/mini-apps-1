@@ -1,2 +1,20 @@
+<!doctype html>
+<head>
+  <meta charset = "utf-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <title>CSV Report Generator</title>
+</head>
 
-
+<body>
+  <div class="generator" align="center">
+  <h1>CSV Report Generator</h1>
+  <form action="/upload" method="post" name="upload">
+    <textarea name="jsontext">
+      Enter your json here 
+    </textarea> <br>
+    <input type ="submit" value="Submit">
+  </form>
+  </div>
+  <script src ='../server.js'></script>
+</body>
+</html>
