@@ -1,0 +1,20 @@
+{
+  "name": "challenge_2",
+  "version": "1.0.0",
+  "description": "CSV Report Generator",
+  "main": "server.js",
+  "scripts": {
+    "test": "npm test",
+    "start": "nodemon .", 
+    "server": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/orenjinominh/rpt20-mini-apps-1/tree/master/challenge_2"
+  },
+  "author": "Minh Ngo",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
