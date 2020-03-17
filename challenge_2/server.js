@@ -17,10 +17,6 @@ app.use(express.static('client'));
 app.use(fileUpload());
 
 /*------------helper functions------------*/
-// needs function to convert text area into csv
-// keys of objects will be columns of report
-// object has children, some may be empty
-
 var getHeaders = function(data) {
   let keys = Object.keys(data);
   keys.pop();
