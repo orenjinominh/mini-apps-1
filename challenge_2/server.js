@@ -1,13 +1,21 @@
 /*-------------constants------------*/
 
 const express = require('express');
+// const multer = require('multer');
+const path = require('path');
+// const bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
+// const fs = require('fs');
 const app = express();
 const port = 3000;
-const bodyParser = require('body-parser');
+
+
 /*------------middleware------------*/
-// app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true })); 
 app.use(express.static('client'));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(fileUpload());
+
 /*------------helper functions------------*/
 // needs function to convert text area into csv
 // keys of objects will be columns of report
@@ -44,22 +52,28 @@ var convertJSONToCSV = function(data) {
 }
 
 /*------------routing------------*/
-// if <form> has method and action, when submit clicked
-// browser will submit form data to server at url no AJAX needed (POST method)
-// response is CSV report with form (so user doesn't leave page)
-
-// 1- upon post to text area 
 app.post('/upload', (req, res) => {
-  var data = req.body.jsontext;
-  data = data.replace(/;/g, " "); // c&p from sample file is baaad, must remove ; at the end
-  console.log('post requested to /upload here --->', data); // this is an object 
-  csvData =  convertJSONToCSV(JSON.parse(data));
-  res.send(`<body> <div class="generator" align="center"> <h1>CSV Report Generator</h1> <form action="/upload" method="POST" name="upload"> <textarea name="jsontext" cols="50" rows="30"></textarea> <br><input type="submit" value="Submit"> </form> <div>${csvData}</div> </div><script src='../server.js'></script></body>`); // 2- this will send back the report and form 
+  console.log('uploaded file here ', req.files);
+
+  if (!req.files) {
+    return res.status(400).send('No files uploaded :(');
+  }
+
+  let uploadedFileContent = req.files.uploadedFile.data.toString('utf8');
+  console.log('uploaded file body here--->', uploadedFileContent);
+  uploadedFileContent = uploadedFileContent.replace(/;/g, " ");
+  let csvData = convertJSONToCSV(JSON.parse(uploadedFileContent));
+  res.send(`<body> <div class="generator" align="center"> <h1>CSV Report Generator</h1> <form action="/upload" method="POST" name="upload" enctype="multipart/form-data"> <input type="file" name="uploadedFile"> <br><input type="submit" value="Submit"> </form> </div><div align="center">${csvData}</div></body>`);
+
+
+  // pre-refactor: text area submission
+  // var data = JSON.parse(req.files); 
+  // data = data.replace(/;/g, ' '); // c&p from sample file is baaad, must remove ; at the end
+  // console.log('post requested to /upload here --->', req.files.uploadedFile); // this is an object 
+  // csvData =  convertJSONToCSV(JSON.parse(data));
+  // res.send('file uploaded!');
+  // res.send(`<body> <div class="generator" align="center"> <h1>CSV Report Generator</h1> <form action="/upload" method="POST" name="upload"> <textarea name="jsontext" cols="50" rows="30"></textarea> <br><input type="submit" value="Submit"> </form> <div>${csvData}</div> </div><script src='../server.js'></script></body>`); // 2- this will send back the report and form 
 });
-
-
-
-
 
 
 /*------------initializing------------*/

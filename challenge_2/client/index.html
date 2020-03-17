@@ -7,12 +7,12 @@
 
 <body>
   <div class="generator" align="center">
-  <h1>CSV Report Generator</h1>
-  <form action="/upload" method="POST" name="upload">
-    <textarea name="jsontext" cols="50" rows="30"></textarea>
-    <br>
-    <input type ="submit" value="Submit">
-  </form>
+    <h1>CSV Report Generator</h1>
+    <form action="/upload" method="POST" name="upload" enctype="multipart/form-data">
+      <input type="file" name="uploadedFile">
+      <br>
+      <input type ="submit" value="Submit">
+    </form>
   </div>
   <script src ='../server.js'></script>
 </body>
