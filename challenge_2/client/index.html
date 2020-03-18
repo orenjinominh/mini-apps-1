@@ -6,7 +6,7 @@
 </head>
 
 <body>
-  <div class="generator" align="center">
+  <div class="generator">
     <h1>CSV Report Generator</h1>
     <form action="/upload" method="POST" name="upload" enctype="multipart/form-data" id="form">
       <input type="file" name="file" id="file">
@@ -15,6 +15,7 @@
     </form>
     <h3>Your CSV Report is Below...</h3>
     <div id="output"></div>
+    <a id="export" download="export.csv" href="data:text/html,">Download Your Report</a>
   </div>
   <script src ='app.js'></script>
 </body>

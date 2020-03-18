@@ -4,7 +4,7 @@ $('form').on('submit', function(e){
   let file = document.getElementById('file').files[0];
   let formData = new FormData();
   formData.append('file', file);
-  
+
   $.ajax({
     url: '/upload',
     type: 'POST',
@@ -19,7 +19,17 @@ $('form').on('submit', function(e){
       console.log('error:', error);
     }
   });
+
+  if ($('#output').children.length > 1) {
+    $("#export").on('click', function() {
+      let dataUri = 'data:text/html,' + encodeURIComponent(document.getElementById('output').textContent);
+      this.href = dataUri;
+    });
+  };
+
 });
+
+
 
 
 
