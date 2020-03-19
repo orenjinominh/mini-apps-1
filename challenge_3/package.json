@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "npm test",
-    "babel": "npx babel -watch client --out-dir public --presets @babel/preset-react --source-maps inline",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "babel": "./node_modules/.bin/babel client --out-dir public --presets @babel/preset-react --source-maps inline --watch"
   },
   "proxy": "http://localhost:3000",
   "repository": {

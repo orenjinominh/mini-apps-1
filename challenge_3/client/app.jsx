@@ -7,8 +7,19 @@ class Checkout extends React.Component {
     this.state = {
       form: 'checkout',
       userData: {
-        key: '',
-        value: ''
+        name: '',
+        email: '', 
+        password: '',
+        line1: '',
+        line2: '',
+        city: '',
+        state: '',
+        zip: '',
+        phoneNum: '',
+        ccNum: '',
+        exp: '',
+        cvv: '',
+        zipCode: ''
       }
     };
 
@@ -22,13 +33,11 @@ class Checkout extends React.Component {
     let key = event.target.id;
     let value = event.target.value; 
 
-    let userDataCopy = {...this.state.userData};
+    let userDataCopy = this.state.userData;
+    console.log('key and value is here--->', key, value);
     userDataCopy[key] = value; 
-    this.setState(userDataCopy);
 
-    // this.setState({
-    //   userData: {...this.state.userData,key,value}
-    // })
+    this.setState({userData: userDataCopy}, () => {console.log(this.state.userData)});
   }
 
   // this should change the form state, bound to next button click 
@@ -65,6 +74,7 @@ class Checkout extends React.Component {
   submitPurchase() {
     // remove purchase button 
     // reset state to default
+
   }
 
   render() {
@@ -119,7 +129,7 @@ class Checkout extends React.Component {
           <h3> Finally, we need your credit card information. </h3>
           <form>
             <label> Credit Card Number </label>
-            <input type="text" id="ccn" onChange={this.handleFormChange.bind(this)}></input> <br></br>
+            <input id="ccn" type="tel" pattern="[0-9\s]{13,19}" maxLength="19" placeholder="xxxx xxxx xxxx xxxx" onChange={this.handleFormChange.bind(this)}></input> <br></br>
             <label> Expiration </label>
             <input type="text" id="exp" onChange={this.handleFormChange.bind(this)}></input> <br></br>
             <label> CVV </label>
@@ -130,15 +140,30 @@ class Checkout extends React.Component {
           </form>
         </div>          
       );
+    } else if (this.state.form === 'reviewPurchase') {
+      return (
+        <div>
+          <h3> Let's review your information. </h3>
+          <div>
+             <p>Name: {this.state.userData.name}</p>
+             <p>Email: {this.state.userData.email}</p>
+             <p>Password: *this is hidden for security purposes* </p>
+             <p>Address: {this.state.userData.line1}</p>
+             <p>{this.state.userData.line2}</p>
+             <p>City: {this.state.userData.city}</p>
+             <p>State: {this.state.userData.state}</p>
+             <p>Zip Code: {this.state.userData.zip}</p>
+             <p>Phone Number: {this.state.userData.phoneNum}</p>
+             <p>Credit Card Number: *this is hidden for security purposes*</p>
+             <p>Expiration Date: {this.state.userData.exp}</p>
+             <p>CVV: {this.state.userData.cvv}</p>
+             <p>Billing Zip Code: {this.state.userData.zipCode}</p> 
+          </div>
+          <button id="purchase" onClick={this.submitPurchase.bind(this)}> Purchase </button>
+        </div>          
+      );
     }
   }
-
-
-
-
-
 }
-
-
 
 ReactDOM.render(<Checkout />, document.getElementById('app'));

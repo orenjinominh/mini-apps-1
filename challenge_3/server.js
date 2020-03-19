@@ -7,7 +7,8 @@ const bodyParser = require('body-parser');
 /*-----------middleware------------*/
 
 app.use(express.static('public'));
-app.use(bodyParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 /*-----------routing--------------*/
 
