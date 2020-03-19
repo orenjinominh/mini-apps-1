@@ -24,7 +24,7 @@ class Checkout extends React.Component {
 
     let userDataCopy = {...this.state.userData};
     userDataCopy[key] = value; 
-    this.setState({userDataCopy});
+    this.setState(userDataCopy);
 
     // this.setState({
     //   userData: {...this.state.userData,key,value}
@@ -34,7 +34,6 @@ class Checkout extends React.Component {
   // this should change the form state, bound to next button click 
   handleNextClick() {
     if (this.state.form === 'checkout') {
-      this.enterData();
       this.setState({
         form: 'userInfo'
       });
@@ -65,16 +64,73 @@ class Checkout extends React.Component {
   // function to take user to homepage (and save data to db?) with ajax call
   submitPurchase() {
     // remove purchase button 
-    // reset state to normal 
+    // reset state to default
   }
 
   render() {
+    if (this.state.form === 'checkout') {
+      return (
+        <div>
+          <h3> Let's get you your impulse buys!</h3>
+          <button id="checkout" onClick={this.handleNextClick.bind(this)}> Checkout </button>
+        </div>
+      );
 
+    } else if (this.state.form === 'userInfo') {
+      return (
+        <div>
+          <h3> First, we need your information. </h3>
+          <form>
+            <label> Name </label>
+            <input type="text" id="name" onChange={this.handleFormChange.bind(this)}></input> <br></br>
+            <label> Email </label>
+            <input type="text" id="email" onChange={this.handleFormChange.bind(this)}></input> <br></br>
+            <label> Password </label>
+            <input type="text" id="password" onChange={this.handleFormChange.bind(this)}></input> <br></br>
+            <button id="nextBtn" onClick={this.handleNextClick.bind(this)}> Next </button>
+          </form>
+        </div>
+      );
 
-
-
-
-
+    } else if (this.state.form === 'address') {
+      return (
+        <div>
+          <h3> Second, we need your mailing information. </h3>
+          <form>
+            <label> Line 1 </label>
+            <input type="text" id="line1" onChange={this.handleFormChange.bind(this)}></input> <br></br>
+            <label> Line 2 </label>
+            <input type="text" id="line2" onChange={this.handleFormChange.bind(this)}></input> <br></br>
+            <label> City </label>
+            <input type="text" id="city" onChange={this.handleFormChange.bind(this)}></input> <br></br>
+            <label> State </label>
+            <input type="text" id="state" onChange={this.handleFormChange.bind(this)}></input> <br></br>
+            <label> Zip Code </label>
+            <input type="text" id="zip" onChange={this.handleFormChange.bind(this)}></input> <br></br>
+            <label> Phone Number </label>
+            <input type="number" id="phoneNum" onChange={this.handleFormChange.bind(this)}></input> <br></br>
+            <button id="nextBtn" onClick={this.handleNextClick.bind(this)}> Next </button>
+          </form>
+        </div>        
+      );
+    } else if (this.state.form === 'creditCard') {
+      return (
+        <div>
+          <h3> Finally, we need your credit card information. </h3>
+          <form>
+            <label> Credit Card Number </label>
+            <input type="text" id="ccn" onChange={this.handleFormChange.bind(this)}></input> <br></br>
+            <label> Expiration </label>
+            <input type="text" id="exp" onChange={this.handleFormChange.bind(this)}></input> <br></br>
+            <label> CVV </label>
+            <input type="text" id="cvv" onChange={this.handleFormChange.bind(this)}></input> <br></br>
+            <label> Billing Zip Code </label>
+            <input type="number" id="zipCode" onChange={this.handleFormChange.bind(this)}></input> <br></br>
+            <button id="nextBtn" onClick={this.handleNextClick.bind(this)}> Next </button>
+          </form>
+        </div>          
+      );
+    }
   }
 
 
