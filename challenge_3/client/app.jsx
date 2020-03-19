@@ -70,11 +70,27 @@ class Checkout extends React.Component {
 
   }
 
-  // function to take user to homepage (and save data to db?) with ajax call
+  // function to take user to homepage upon click of Purchase button
   submitPurchase() {
-    // remove purchase button 
-    // reset state to default
-
+    alert('Start looking forward to your new purchase!');
+    this.setState({
+      form: 'checkout',
+      userData: {
+        name: '',
+        email: '', 
+        password: '',
+        line1: '',
+        line2: '',
+        city: '',
+        state: '',
+        zip: '',
+        phoneNum: '',
+        ccNum: '',
+        exp: '',
+        cvv: '',
+        zipCode: ''
+      }
+    });
   }
 
   render() {
@@ -131,7 +147,7 @@ class Checkout extends React.Component {
             <label> Credit Card Number </label>
             <input id="ccn" type="tel" pattern="[0-9\s]{13,19}" maxLength="19" placeholder="xxxx xxxx xxxx xxxx" onChange={this.handleFormChange.bind(this)}></input> <br></br>
             <label> Expiration </label>
-            <input type="text" id="exp" onChange={this.handleFormChange.bind(this)}></input> <br></br>
+            <input type="text" id="exp" placeholder="xx/xx" onChange={this.handleFormChange.bind(this)}></input> <br></br>
             <label> CVV </label>
             <input type="text" id="cvv" onChange={this.handleFormChange.bind(this)}></input> <br></br>
             <label> Billing Zip Code </label>
