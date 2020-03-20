@@ -34,10 +34,9 @@ class Checkout extends React.Component {
     let value = event.target.value; 
 
     let userDataCopy = this.state.userData;
-    console.log('key and value is here--->', key, value);
     userDataCopy[key] = value; 
 
-    this.setState({userData: userDataCopy}, () => {console.log(this.state.userData)});
+    this.setState({userData: userDataCopy});
   }
 
   // this should change the form state, bound to next button click 
@@ -67,7 +66,17 @@ class Checkout extends React.Component {
 
   // helper ajax function to post to database with click on "next"
   enterData() {
-
+    $ajax({
+      url: '/submit',
+      type: 'POST',
+      data: this.state.userData,
+      success: (data) => {
+        console.log('Added morsel to db...', data);
+      }, 
+      error: (data) => {
+        console.log('Error: ', data)
+      }
+    })
   }
 
   // function to take user to homepage upon click of Purchase button
@@ -126,7 +135,7 @@ class Checkout extends React.Component {
             <label> Line 1 </label>
             <input type="text" id="line1" onChange={this.handleFormChange.bind(this)}></input> <br></br>
             <label> Line 2 </label>
-            <input type="text" id="line2" onChange={this.handleFormChange.bind(this)}></input> <br></br>
+            <input type="text" id="line2" placeholder="optional" onChange={this.handleFormChange.bind(this)}></input> <br></br>
             <label> City </label>
             <input type="text" id="city" onChange={this.handleFormChange.bind(this)}></input> <br></br>
             <label> State </label>
@@ -134,7 +143,7 @@ class Checkout extends React.Component {
             <label> Zip Code </label>
             <input type="text" id="zip" onChange={this.handleFormChange.bind(this)}></input> <br></br>
             <label> Phone Number </label>
-            <input type="number" id="phoneNum" onChange={this.handleFormChange.bind(this)}></input> <br></br>
+            <input type="number" id="phoneNum" placeholder="numbers only" onChange={this.handleFormChange.bind(this)}></input> <br></br>
             <button id="nextBtn" onClick={this.handleNextClick.bind(this)}> Next </button>
           </form>
         </div>        
