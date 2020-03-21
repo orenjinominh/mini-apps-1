@@ -29,6 +29,19 @@ MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true }, (er
 /*-----------routing--------------*/
 
 app.post('/submit', (req, res) => {
+  let infoChunk = req.body;
+  if (!req.body._id) {
+    db.collection('userData').insertOne(infoChunk, function (err, result) {
+      if (err) {
+        res.send('Error: ', err);
+      } else {
+        res.send('Added data to db...');
+        
+      }
+    });
+
+
+  }
 
 
 });

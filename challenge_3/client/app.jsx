@@ -36,7 +36,7 @@ class Checkout extends React.Component {
     let userDataCopy = this.state.userData;
     userDataCopy[key] = value; 
 
-    this.setState({userData: userDataCopy});
+    this.setState({userData: userDataCopy}, ()=>{console.log('user data here--->', this.state.userData)});
   }
 
   // this should change the form state, bound to next button click 
@@ -46,27 +46,28 @@ class Checkout extends React.Component {
         form: 'userInfo'
       });
     } else if (this.state.form === 'userInfo') {
-      this.enterData();
       this.setState({
         form: 'address'
       });
 
     } else if (this.state.form === 'address') {
-      this.enterData();
       this.setState({
         form: 'creditCard'
       });
     } else if (this.state.form === 'creditCard') {
-      this.enterData();
       this.setState({
         form: 'reviewPurchase'
       });
     }
   }
 
-  // helper ajax function to post to database with click on "next"
-  enterData() {
-    $ajax({
+
+  // function to save user's data to Mongodb
+  // takes user to homepage upon click of Purchase button
+  submitPurchase() {
+    alert('Start looking forward to your new purchase!');
+
+    $.ajax({
       url: '/submit',
       type: 'POST',
       data: this.state.userData,
@@ -76,12 +77,8 @@ class Checkout extends React.Component {
       error: (data) => {
         console.log('Error: ', data)
       }
-    })
-  }
+    });
 
-  // function to take user to homepage upon click of Purchase button
-  submitPurchase() {
-    alert('Start looking forward to your new purchase!');
     this.setState({
       form: 'checkout',
       userData: {
