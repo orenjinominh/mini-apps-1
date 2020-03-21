@@ -19,7 +19,8 @@ class Checkout extends React.Component {
         ccNum: '',
         exp: '',
         cvv: '',
-        zipCode: ''
+        zipCode: '',
+        userID: ''
       }
     };
 
@@ -39,34 +40,28 @@ class Checkout extends React.Component {
     this.setState({userData: userDataCopy}, ()=>{console.log('user data here--->', this.state.userData)});
   }
 
-  // this should change the form state, bound to next button click 
-  handleNextClick() {
-    if (this.state.form === 'checkout') {
-      this.setState({
-        form: 'userInfo'
-      });
-    } else if (this.state.form === 'userInfo') {
-      this.setState({
-        form: 'address'
-      });
+  // function to create record in database
+  createCheckout() {
+    $.ajax({
+      url: '/checkout',
+      type: 'POST',
+      data: this.state.userData,
+      success: (data) => {
+        console.log('Checkout initiated', data);
+        console.log('findOne result insertedId is here--->', data);
+        let userDataCopy = this.state.userData;
+        console.log('userDataCopy here--->', userDataCopy);
+        userDataCopy.userID = data;
+        this.setState({userData: userDataCopy});
+      }, 
+      error: (data) => {
+        console.log('Error: ', data)
+      }
+    });
 
-    } else if (this.state.form === 'address') {
-      this.setState({
-        form: 'creditCard'
-      });
-    } else if (this.state.form === 'creditCard') {
-      this.setState({
-        form: 'reviewPurchase'
-      });
-    }
   }
-
-
-  // function to save user's data to Mongodb
-  // takes user to homepage upon click of Purchase button
-  submitPurchase() {
-    alert('Start looking forward to your new purchase!');
-
+  // function to save user's data to Mongodb or update if not found
+  enterData() {
     $.ajax({
       url: '/submit',
       type: 'POST',
@@ -78,6 +73,38 @@ class Checkout extends React.Component {
         console.log('Error: ', data)
       }
     });
+  }
+
+  // this should change the form state, bound to next button click 
+  handleNextClick() {
+    if (this.state.form === 'checkout') {
+      this.createCheckout();
+      this.setState({
+        form: 'userInfo'
+      });
+    } else if (this.state.form === 'userInfo') {
+      this.enterData();
+      this.setState({
+        form: 'address'
+      });
+
+    } else if (this.state.form === 'address') {
+      this.enterData();
+      this.setState({
+        form: 'creditCard'
+      });
+    } else if (this.state.form === 'creditCard') {
+      this.enterData();
+      this.setState({
+        form: 'reviewPurchase'
+      });
+    }
+  }
+
+
+  // takes user to homepage upon click of Purchase button
+  submitPurchase() {
+    alert('Start looking forward to your new purchase!');
 
     this.setState({
       form: 'checkout',
@@ -94,7 +121,8 @@ class Checkout extends React.Component {
         ccNum: '',
         exp: '',
         cvv: '',
-        zipCode: ''
+        zipCode: '',
+        userID: ''
       }
     });
   }
